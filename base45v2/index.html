@@ -10,7 +10,21 @@
     $(document).ready(() =>
     {
       $("#cleartext").on("input", (event) => {
-        $("#ciphertext").val($("#cleartext").val())
+        
+        // Récupérer le contenu de #cleartext dans une variable,
+        // faire en sorte d'avoir un array de code ascii
+
+        const Mk = []
+
+        const input = $("#cleartext").val()
+        const asciis = input.split('').map((c) => c.charCodeAt(0))
+        const output = asciis.map((c) => ({"flag": Math.floor(c / 45), "color": Mk[c % 45]}))
+
+
+        // $("#ciphertext").append($("#cleartext").val())
+        // $("#ciphertext").empty()
+
+        // insérer un élément span avec un attribute style= font-color:xxxx et une valeur particulière
       })
     });
   </script>
@@ -20,7 +34,7 @@
 <body class="w-screen h-screen">
   <div class="flex flex-col w-full h-full text-3xl">
     <textarea id="cleartext" class="resize-none w-full h-1/2 p-10 border-b-4 border-gray-200" placeholder="Type a message to encrypt" autofocus></textarea>
-    <textarea id="ciphertext" class="resize-none w-full h-1/2 p-10" readonly></textarea>
+    <div id="ciphertext" class="w-full h-1/2 p-10"></div>
   </div>  
 </body>
 </html>
