@@ -7,24 +7,22 @@
   <script src="jquery-3.6.0.js" async defer></script>
   <script src="code.js" async defer></script>
   <script>
-    $(document).ready(() =>
-    {
-      $("#cleartext").on("input", (event) => {
-        
-        // Récupérer le contenu de #cleartext dans une variable,
-        // faire en sorte d'avoir un array de code ascii
 
-        const Mk = []
+    // Takes an array of objects {flag : int, color : str}..
+    // ..where color is a string hex code
+    const printCiphertext = objs => {
+      $("#ciphertext").empty()
+      objs.forEach(e => {
+        const span = '<span style="color: ' + e.color + '">' + e.flag + '</span>'
+        $("#ciphertext").append(span)
+      })
+    }
 
+    $(document).ready(() => {
+      $("#cleartext").on("input", _ => {
         const input = $("#cleartext").val()
-        const asciis = input.split('').map((c) => c.charCodeAt(0))
-        const output = asciis.map((c) => ({"flag": Math.floor(c / 45), "color": Mk[c % 45]}))
-
-
-        // $("#ciphertext").append($("#cleartext").val())
-        // $("#ciphertext").empty()
-
-        // insérer un élément span avec un attribute style= font-color:xxxx et une valeur particulière
+        const output = input.split('').map(c => chiffrer(c))
+        printCiphertext(output)
       })
     });
   </script>
