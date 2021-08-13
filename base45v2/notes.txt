@@ -1,0 +1,1 @@
+Je voudrais deux panels horizontaux avec un séparateur (barre grise) en leur milieu séparant l'écran en deux.
