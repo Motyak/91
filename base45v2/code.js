@@ -15,11 +15,21 @@ const Mk = [...Array(45).keys()]
 
 // need a string containing at least one character..
 // .. and takes the first one
-// returns an object {flag : int, hex color : str}
+// returns an object {flag : int, color : str}..
+// ..where color is a string hex code
 function chiffrer(char)
 {
     return {
-        "flag": Math.floor(char.charCodeAt(0) / 45), 
-        "color": "#" + Mk[char.charCodeAt(0) % 45].toString()
+        flag: Math.floor(char.charCodeAt(0) / 45), 
+        color: "#" + Mk[char.charCodeAt(0) % 45].toString()
     }
+}
+
+// takes an object {flag : int, color : str}..
+// ..where color is a string hex code
+function dechiffrer(obj)
+{
+    const colorToNb = parseInt(obj.color.substring(1))
+    const ascii = obj.flag * 45 + Math.floor(colorToNb*91 / 999999 - 1)
+    return String.fromCharCode(ascii)
 }
