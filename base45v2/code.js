@@ -1,5 +1,5 @@
 // Takes an integer
-function sumOfDigits(n)
+function _sumOfDigits(n)
 {
     return n.toString()
             .split('')
@@ -10,7 +10,7 @@ function sumOfDigits(n)
 // La séquence Mk ordonné naturellement
 const Mk = [...Array(45).keys()]
            .map(n => n + 1)
-           .map(n => (n%10!=0 && sumOfDigits(n)<10)?n:91-n)
+           .map(n => (n%10!=0 && _sumOfDigits(n)<10)?n:91-n)
            .map(n => Math.floor(999999*n /91))
 
 // need a string containing at least one character..

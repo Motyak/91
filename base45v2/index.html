@@ -2,12 +2,9 @@
 <html>
 <head>
   <link href="tailwind.css" rel="stylesheet">
-  <style>
-  </style>
   <script src="jquery-3.6.0.js" async defer></script>
   <script src="code.js" async defer></script>
   <script>
-
     // Takes an array of objects {flag : int, color : str}..
     // ..where color is a string hex code
     const printCiphertext = objs => {
@@ -32,12 +29,8 @@
 <body class="w-screen h-screen">
   <div class="flex flex-col w-full h-full text-3xl">
     <textarea id="cleartext" class="resize-none w-full h-1/2 p-10 border-b-4 border-gray-200" placeholder="Type a message to encrypt" autofocus></textarea>
-    <div id="ciphertext" class="flex flex-wrap w-full h-1/2 p-10 overflow-scroll"></div>
+    <div id="ciphertext" class="flex flex-wrap w-full p-10 overflow-y-auto"></div>
   </div>  
 </body>
 </html>
-
-
-
-
  

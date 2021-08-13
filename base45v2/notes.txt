@@ -1,0 +1,7 @@
+Faire en sorte qu'en copiant le ciphertext ça le format de telle sorte à pouvoir
+le redéchiffrer par la suite (format: '<flag>-<nbCouleur>')
+
+Faire l'onglet dechiffrer (ajax)
+
+Faire en sorte de pouvoir proposer également une version php (API),
+pour ceux qui n'aiment pas javascript, qui call un process python3
