@@ -1,6 +1,5 @@
 // Takes an integer
-function _sumOfDigits(n)
-{
+const sumOfDigits = n => {
     return n.toString()
             .split('')
             .map(c => parseInt(c))
@@ -10,7 +9,7 @@ function _sumOfDigits(n)
 // La séquence Mk ordonné naturellement
 const Mk = [...Array(45).keys()]
            .map(n => n + 1)
-           .map(n => (n%10!=0 && _sumOfDigits(n)<10)?n:91-n)
+           .map(n => (n%10!=0 && sumOfDigits(n)<10)?n:91-n)
            .map(n => Math.floor(999999*n /91))
 
 // need a string containing at least one character..
@@ -30,6 +29,6 @@ function chiffrer(char)
 function dechiffrer(obj)
 {
     const colorToNb = parseInt(obj.color.substring(1))
-    const ascii = obj.flag * 45 + Math.floor(colorToNb*91 / 999999 - 1)
+    const ascii = obj.flag * 45 + Math.floor(colorToNb*91 / 999999) - 1
     return String.fromCharCode(ascii)
 }
