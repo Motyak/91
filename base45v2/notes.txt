@@ -10,3 +10,4 @@ Ajouter en plus du site statique un script node pour faire une API.
 -POST /decrypt prend en données un cypher en plaintext et retourne le message clair
 On va faire en sorte de récupérer le package express et de tout dl en local
     pour pas avoir besoin de npm, mais seulement node (shebang node)
+    
