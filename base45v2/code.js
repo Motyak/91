@@ -32,18 +32,27 @@ function formater(objs)
     return objs.map(obj => `${obj.flag}-${obj.color}`)
 }
 
+// pas prog fonctionnelle = degueulasse
 function verifierFormat(str)
 {
     const regexAll = /^(?:\d-\d{5,6},)*\d-\d{5,6}$/gm
     if(!str.match(regexAll))
         return false
     const regexNb = /\d-(\d{5,6})/g
-    // console.log(regexNb.exec(str)[1])
     let match
     while((match = regexNb.exec(str)) !== null)
         if(!Mk.includes(parseInt(match[1])))
             return false
     return true
+}
+// takes a formatted string and returns an..
+// ..array of objects {flag : int, color : str}
+function parser(str)
+{
+    return str.split(',').map(e => ({
+        flag: e[0],
+        color: "#" + (e.substr(2).length === 5?'0':'') + e.substr(2)
+    }))
 }
 
 // takes an object {flag : int, color : str}..

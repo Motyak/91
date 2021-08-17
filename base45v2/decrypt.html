@@ -51,11 +51,12 @@
         const input = $("#ciphertext").val()
         if(!verifierFormat(input))
         {
-          console.log("bad format")
+          console.log("bad format") //faudra l'afficher à l'écran
+          $("#ciphertext").val("")
         }
         else
         {
-          console.log("good format")
+          // faire le formatage
         }
         // const output = input.split('').map(c => chiffrer(c))
         // printCiphertext(output)
