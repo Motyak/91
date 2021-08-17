@@ -9,51 +9,15 @@
   <script src="libjquery.js" async defer></script>
   <script src="code.js" async defer></script>
   <script>
-    const updateButtonState = cleartext => {
-      if(cleartext === "") {
-        $("#greyedcopytoclipboard").show()
-        $("#copytoclipboard").hide()
-      }
-      else {
-        $("#copytoclipboard").show()
-        $("#greyedcopytoclipboard").hide()
-      }
-    }
 
     // Takes an array of objects {flag : int, color : str}..
     // ..where color is a string hex code (without hex char)
-    const printCiphertext = (objs,encrypt=true) => {
-      if(encrypt)
-      {
-        $("#ciphertext").empty()
+    const printOutputText = (objs) => {
+        $("#symbolstext").empty()
         objs.forEach(e => {
           const span = '<span style="color: #' + e.color + '">' + e.flag + '</span>'
-          $("#ciphertext").append(span)
+          $("#symbolstext").append(span)
         })
-      }
-      else // if decrypt
-      {
-        $("#cleartext").empty()
-        objs.forEach(e => {
-          const span = '<span style="color: #' + e.color + '">' + e.flag + '</span>'
-          $("#cleartext").append(span)
-        })
-      }
-    }
-
-    const copyToCliboard = () => {
-      const symbols = $("#ciphertext").children().toArray()
-      const objs = symbols.map(span => ({
-        flag: span.innerText, 
-        color: span.attributes[0].value.substr(8)
-      }))
-      const formatted = formater(objs)
-      /* Copy 'formatted' to clipboard */
-      $("body").append("<textarea id=\"tmp\">" + formatted.join() + "</textarea>")
-      $("#tmp").select()
-      document.execCommand("copy")
-      $("#tmp").remove()
-      $("#copytoclipboard").text("Copied!").delay(1200).fadeIn(() => $("#copytoclipboard").text("Copy to clipboard"))
     }
 
     $(document).ready(() => {
@@ -64,17 +28,32 @@
         {
           console.log("bad format") //faudra l'afficher à l'écran
           $("#ciphertext").val("")
+          $("#symbolstext").empty()
         }
         else
         {
           const symbols = parser(input)
-          printCiphertext(symbols, false)
+          printOutputText(symbols)
         }
-        // const output = input.split('').map(c => chiffrer(c))
-        // printCiphertext(output)
       })
 
-      $("#copytoclipboard").click(() => copyToCliboard())
+      $("button").click(() => {
+        if($("button").text() === "Reveal secret message")
+        {
+          const symbols = parser($("#ciphertext").val())
+          const cleartext = symbols.map(s => dechiffrer(s)).join('')
+          // console.log(cleartext)
+          $("#symbolstext").hide()
+          $("#cleartext").val(cleartext).show()
+          $("button").text("Hide secret message")
+        }
+        else // if text === hide secret message
+        {
+          $("#symbolstext").show()
+          $("#cleartext").hide()
+          $("button").text("Reveal secret message")
+        }
+      })
 
     });
   </script>
@@ -83,10 +62,10 @@
   <div class="flex flex-col w-full h-full">
     <textarea id="ciphertext" class="resize-none w-full h-27/50 p-10 border-b-2 border-gray-300 text-3xl" placeholder="Paste a message to decrypt" autofocus></textarea>
     <div id="toolbar" class="flex justify-center w-full h-2/25 bg-gray-100">
-      <button id="greyedcopytoclipboard" class="bg-green-400 border border-black my-3 px-1 rounded text-xl opacity-50" disabled>Copy to clipboard</button>
-      <button id="copytoclipboard" class="bg-green-400 border border-black my-3 px-1 min-w-168 rounded text-xl hover:bg-green-500 focus:underline" hidden>Copy to clipboard</button>
+      <button class="bg-green-400 border border-black my-3 px-1 min-w-168 rounded text-xl hover:bg-green-500 focus:underline">Reveal secret message</button>
     </div>
-    <div id="cleartext" class="flex flex-wrap w-full max-h-31/50 p-10 border-gray-200 text-3xl select-none overflow-y-auto"></div>
+    <div id="symbolstext" class="flex flex-wrap w-full max-h-31/50 p-10 border-gray-200 text-3xl select-none overflow-y-auto"></div>
+    <textarea id="cleartext" class="resize-none w-full p-10 text-3xl" hidden></textarea>
   </div>  
 </body>
 </html>
