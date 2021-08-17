@@ -36,7 +36,7 @@
         flag: span.innerText, 
         color: span.attributes[0].value.substr(8)
       }))
-      const formatted = objs.map(obj => `${obj.flag}-${obj.color}`)
+      const formatted = formater(objs)
       /* Copy 'formatted' to clipboard */
       $("body").append("<textarea id=\"tmp\">" + formatted.join() + "</textarea>")
       $("#tmp").select()

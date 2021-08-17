@@ -24,6 +24,11 @@ function chiffrer(char)
     }
 }
 
+function formater(objs)
+{
+    return objs.map(obj => `${obj.flag}-${obj.color}`)
+}
+
 // takes an object {flag : int, color : str}..
 // ..where color is a string hex code (without hex char)
 function dechiffrer(obj)
