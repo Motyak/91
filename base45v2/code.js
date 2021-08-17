@@ -51,7 +51,7 @@ function parser(str)
 {
     return str.split(',').map(e => ({
         flag: e[0],
-        color: "#" + (e.substr(2).length === 5?'0':'') + e.substr(2)
+        color: (e.substr(2).length === 5?'0':'') + e.substr(2)
     }))
 }
 
