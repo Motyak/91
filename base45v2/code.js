@@ -24,9 +24,26 @@ function chiffrer(char)
     }
 }
 
+// takes an object {flag : int, color : str}..
+// ..where color is a string hex code (without hex char)
+// return a formatted string 
 function formater(objs)
 {
     return objs.map(obj => `${obj.flag}-${obj.color}`)
+}
+
+function verifierFormat(str)
+{
+    const regexAll = /^(?:\d-\d{5,6},)*\d-\d{5,6}$/gm
+    if(!str.match(regexAll))
+        return false
+    const regexNb = /\d-(\d{5,6})/g
+    // console.log(regexNb.exec(str)[1])
+    let match
+    while((match = regexNb.exec(str)) !== null)
+        if(!Mk.includes(parseInt(match[1])))
+            return false
+    return true
 }
 
 // takes an object {flag : int, color : str}..
