@@ -10,4 +10,6 @@
   height: 8%;
 }
 
-
+.min-w-168 {
+  min-width: 168px;
+}

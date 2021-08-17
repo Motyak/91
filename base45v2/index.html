@@ -42,6 +42,7 @@
       $("#tmp").select()
       document.execCommand("copy")
       $("#tmp").remove()
+      $("#copytoclipboard").text("Copied!").delay(1200).fadeIn(() => $("#copytoclipboard").text("Copy to clipboard"))
     }
 
     $(document).ready(() => {
@@ -63,7 +64,7 @@
     <textarea id="cleartext" class="resize-none w-full h-27/50 p-10 border-b-2 border-gray-300 text-3xl" placeholder="Type a message to encrypt" autofocus></textarea>
     <div id="toolbar" class="flex justify-center w-full h-2/25 bg-gray-100">
       <button id="greyedcopytoclipboard" class="bg-green-400 border border-black my-3 px-1 rounded text-xl opacity-50" disabled>Copy to clipboard</button>
-      <button id="copytoclipboard" class="bg-green-400 border border-black my-3 px-1 rounded text-xl hover:bg-green-500" hidden>Copy to clipboard</button>
+      <button id="copytoclipboard" class="bg-green-400 border border-black my-3 px-1 min-w-168 rounded text-xl hover:bg-green-500 focus:underline" hidden>Copy to clipboard</button>
     </div>
     <div id="ciphertext" class="flex flex-wrap w-full max-h-31/50 p-10 border-gray-200 text-3xl select-none overflow-y-auto"></div>
   </div>  
