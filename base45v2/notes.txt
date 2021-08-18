@@ -1,8 +1,3 @@
-Faire en sorte qu'en copiant le ciphertext ça le format de telle sorte à pouvoir
-le redéchiffrer par la suite (format: '<flag>-<nbCouleur>')
-
-Faire l'onglet dechiffrer (ajax)
-
 Ajouter en plus du site statique un script node pour faire une API.
 -GET / distribue la page index si le client est un browser,
     sinon ça affiche la doc -- comment utiliser l'api avec curl.
