@@ -61,6 +61,5 @@ function dechiffrer(obj)
 {
     const colorToNb = parseInt(obj.color)
     const ascii = obj.flag * 45 + Mk.findIndex((e) => e === colorToNb)
-    console.log(ascii)
     return String.fromCharCode(ascii)
 }
