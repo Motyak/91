@@ -18,9 +18,10 @@ const Mk = [...Array(45).keys()]
 // ..where color is a string hex code (without hex char)
 function chiffrer(char)
 {
+    let color = Mk[char.charCodeAt(0) % 45].toString()
     return {
         flag: Math.floor(char.charCodeAt(0) / 45), 
-        color: Mk[char.charCodeAt(0) % 45].toString()
+        color: (color.length === 5?'0':'') + color
     }
 }
 
