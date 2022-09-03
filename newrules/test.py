@@ -1,58 +1,88 @@
 from mk91 import opp, bros, inv6, inv3, inv2
 
 
-def test__opp():
-    res = opp(81)
-    assert res == 10, f"expected 10, had {res}"
-    assert opp(81) + 81 == 91, "sum of n and opp(n) should always equal 91"
+def fail(had, expected):
+    return f"had {had}, expected: {expected}"
+
+
+def int_to_str(n):
+    res = str(n)
+    res = (2-len(res)) * '0' + res
+    return res
 
 
 def test__bros():
-    res = bros(81)
-    assert res == {1, 9}, "expected {1, 9}, had " + f"{res}"
-    assert opp(81) == sum({1, 9}), "sum of bros(n) should always equal opp(n)"
+    seq = [n if sum([int(d) for d in str(n)]) < 10 and n % 10 != 0
+           else 91-n for n in range(1, 46)]
+    for i in seq:
+        assert opp(i) == sum(bros(i)), \
+            f"sum of bros({i}) should always equal opp({i})"
 
 
 def test__inv6():
-    res = inv6(81)
-    assert res == (8,9,0,1,0,9), f"expected (8,9,0,1,0,9), had {res}"
-    assert sum(inv6(81)) == 27, "inverse sum of digits should always equal 27"
+    seq = range(1, 91)
+    for n in seq:
+        a = str(n/91)[2:8]
+        b = ''.join([*map(lambda x: str(x), inv6(n))])
+        assert a == b, f"{a} should match {b}"
+        assert sum(inv6(n)) == 27, \
+            "inverse sum of digits should always equal 27"
 
 
 def test__inv3():
-    res = inv3(81)
-    assert res == (89,1,9), f"expected (89,1,9), had {res}"
-    assert sum(inv3(81)) == 99, \
-        "inverse 3 sum of digits should always equal 99"
+    seq = [n if sum([int(d) for d in str(n)]) < 10 and n % 10 != 0 
+           else 91-n for n in range(1, 46)]
+    for n in seq:
+        a1 = str(n/91)[2:4]
+        a2 = str(n/91)[4:6]
+        a3 = str(n/91)[6:8]
+        b1 = ''.join([*map(int_to_str, inv3(n))])[0:2]
+        b2 = ''.join([*map(int_to_str, inv3(n))])[2:4]
+        b3 = ''.join([*map(int_to_str, inv3(n))])[4:6]
+        assert sum(inv3(n)) == 99, \
+            f"input: {n}\ninverse 3 sum of digits should always equal 99"
 
-    bro1, bro2 = bros(81)
+    for n in range(1, 91):
+        a1 = str(n/91)[2:4]
+        a2 = str(n/91)[4:6]
+        a3 = str(n/91)[6:8]
+        b1 = ''.join([*map(int_to_str, inv3(n))])[0:2]
+        b2 = ''.join([*map(int_to_str, inv3(n))])[2:4]
+        b3 = ''.join([*map(int_to_str, inv3(n))])[4:6]
+        assert a1 == b1, fail(a1, b1)
+        assert a2 == b2, fail(a2, b2)
+        assert a3 == b3, fail(a3, b3)
+        bro1, bro2 = bros(n)
+        for c in inv3(bro1):
+            assert c in inv3(n), "inverse 3 coords of any n brother should be \
+                the same as n (not in the same order though)"
+        for c in inv3(bro2):
+            assert c in inv3(n), "inverse 3 coords of any n brother should be \
+                the same as n (not in the same order though)"
 
-    for c in inv3(bro1):
-        assert c in inv3(81), "inverse 3 coords of any n brother should be \
-            the same as n (not in the same order though)"
-    for c in inv3(bro2):
-        assert c in inv3(81), "inverse 3 coords of any n brother should be \
-            the same as n (not in the same order though)"
-
-    first_coord = inv3(81)[0]
-    secnd_coord = inv3(81)[1]
-    assert 0 + inv3(bro1).index(first_coord) + inv3(bro2).index(first_coord) \
-        == 1 + inv3(bro1).index(secnd_coord) + inv3(bro2).index(secnd_coord) \
-        == 3, "inverse 3 coords should have same order between bros"
+        fst_coord = inv3(n)[0]
+        snd_coord = inv3(n)[1]
+        assert 0 + inv3(bro1).index(fst_coord) + inv3(bro2).index(fst_coord) \
+            == 1 + inv3(bro1).index(snd_coord) + inv3(bro2).index(snd_coord) \
+            == 3, "inverse 3 coords should have same order between bros"
 
 
 def test__inv2():
-    res = inv2(81)
-    assert res == (890,109), f"expected (890,109), had {res}"
-    assert sum(inv2(81)) == 999, \
-        "inverse 2 sum of digits should always equal 999"
-    assert inv2(81)[0] == inv2(opp(81))[1] \
-        and inv2(81)[1] == inv2(opp(81))[0], \
-        "inverse 2 of n should have swapped coords of inverse 2 of opp(n)"
+    for n in range(1, 91):
+        a1 = str(n/91)[2:5]
+        a2 = str(n/91)[5:8]
+        b1 = ''.join([*map(int_to_str, inv3(n))])[0:3]
+        b2 = ''.join([*map(int_to_str, inv3(n))])[3:6]
+        assert a1 == b1, fail(a1, b1)
+        assert a2 == b2, fail(a2, b2)
+        assert inv2(81)[0] == inv2(opp(81))[1] \
+            and inv2(81)[1] == inv2(opp(81))[0], \
+            "inverse 2 of n should have swapped coords of inverse 2 of opp(n)"
+        assert sum(inv2(n)) == 999, \
+            "inverse 2 sum of digits should always equal 999"
 
 
 if __name__ == '__main__':
-    test__opp()
     test__bros()
     test__inv6()
     test__inv3()
