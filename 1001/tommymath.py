@@ -93,19 +93,14 @@ class Fraction:
         assert isinstance(self.a, Int) and isinstance(self.b, Int)
         a, b = self.a.val, self.b.val
         if self.numeric:
-            # TODO: faire en sorte que 50/1000 retourne 0.050 et non 0.05
-            # TODO: faire en sorte que 123/999 retourne 0.(123) et non 0.12312312
             return Decimal.fromFrac(a, b).__str__()
-        
-            # TODO: si c'est un nombre rationnel périodique, on met la partie périodique entre parenthèses
-            # TODO: si c'est un nombre rationnel décimal, on affiche jusqu'à 10 digits, ellipsis '...' si ça dépasse
         else:
             return formatFrac(*simplify(a, b))
 
-print(Fraction.fromStr("a * 1 000", "1 000 000"), end="\n\n")
+# print(Fraction.fromStr("a * 1 000", "1 000 000"), end="\n\n")
 
-print(Fraction(Int(50), Int(1000), numeric=False), end="\n\n")
+# print(Fraction(Int(50), Int(1000), numeric=False), end="\n\n")
 
-print(Fraction(Int(50), Int(1000), numeric=True), end="\n\n")
+# print(Fraction(Int(50), Int(1000), numeric=True), end="\n\n")
 
-print(Fraction(Int(50), Int(999), numeric=True))
+# print(Fraction(Int(50), Int(999), numeric=True))

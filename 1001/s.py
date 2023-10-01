@@ -1,25 +1,71 @@
+#!/usr/bin/env python3
 
+from tommymath import Int, Decimal, Fraction
 
+import sys
+from io import StringIO
 
 def printSeparator():
     #TODO: use current terminal width
-    print("==============")
+    print("==============", end="\n\n")
 
 def printEquality(lst):
-    # print(" = ".join(lst))
-    # gonna be more complicated than that
+    out = [StringIO(), StringIO(), StringIO()] # 3 lines
 
-# multiples of 11, up to 11*90 = 990
-multiples_of_11 = (11 * i for i in range(91))
+    def append_to_line(lineno, text):
+        assert lineno in {1, 2, 3}
+        out[lineno - 1].write(text)
 
-def out_of_1000(a):
-    print()
+    def get_line(lineno):
+        assert lineno in {1, 2, 3}
+        return out[lineno - 1].getvalue()
+    
+    def append_elem(elem):
+        if elem.numeric:
+            # TODO:
+            line2 = elem.__str__()
+            if len(get_line(2)) != 0:
+                line2 = " = " + line2
+            append_to_line(2, line2)
+            return
+        
+        line1, line2, line3 = elem.__str__().split("\n")
+        if len(get_line(2)) != 0:
+            line1 = len(" = ") * " " + line1
+            line2 = " = " + line2
+            line3 = len(" = ") * " " + line3
+        append_to_line(1, line1)
+        append_to_line(2, line2)
+        append_to_line(3, line3)
 
-for a in multiples_of_11:
-    lst = [Fraction(f"{a}", "1 000", isInt=false), Fraction(f"{a} * 1 000", "1 000 000", isInt=false), Fraction(a * 1_000, 1_000_000, isInt=true)]
+    for elem in lst:
+        append_elem(elem)
+    
+    res = map(lambda x: x.getvalue(), out)
+    res = filter(lambda x: len(x) != 0, res)
+    res = "\n".join(res)
+    print(res, end="")
+    if len(res) != 0:
+        print(end="\n\n") # trailing newline
+
+# i = Int(777)
+# lst = [Fraction(f"{i}", "1 000", numeric=False), 
+#         Fraction(f"{i} * 1 000", "1 000 000", numeric=False), 
+#         Fraction(Int(i.val * 1_000), Int(1_000_000), numeric=True)
+# ]
+# printEquality(lst)
+
+for i in sys.stdin:
+    i = int(i)
+
+    lst = [Fraction(f"{i}", "1 000", numeric=False), 
+           Fraction(f"{i} * 1 000", "1 000 000", numeric=False), 
+           Fraction(Int(i * 1_000), Int(1_000_000), numeric=True)]
     printEquality(lst)
 
     printSeparator()
         
-    lst = [Fraction(f"{a}", "1 001", isInt=false), Fraction(f"{a} * 999", "999 999", isInt=false), Fraction(a * 999, 999_999, isInt=true)]
+    lst = [Fraction(f"{i}", "1 001", numeric=False), 
+           Fraction(f"{i} * 999", "999 999", numeric=False), 
+           Fraction(Int(i * 999), Int(999_999), numeric=True)]
     printEquality(lst)
