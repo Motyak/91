@@ -2,7 +2,7 @@
 
 
 def printSeparator():
-    #TODO: use current terminal height
+    #TODO: use current terminal width
     print("==============")
 
 def printEquality(lst):
