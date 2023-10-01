@@ -4,10 +4,7 @@ from tommymath import Int, Decimal, Fraction
 
 import sys
 from io import StringIO
-
-def printSeparator():
-    #TODO: use current terminal width
-    print("==============", end="\n\n")
+import os
 
 def printEquality(lst):
     out = [StringIO(), StringIO(), StringIO()] # 3 lines
@@ -48,12 +45,11 @@ def printEquality(lst):
     if len(res) != 0:
         print(end="\n\n") # trailing newline
 
-# i = Int(777)
-# lst = [Fraction(f"{i}", "1 000", numeric=False), 
-#         Fraction(f"{i} * 1 000", "1 000 000", numeric=False), 
-#         Fraction(Int(i.val * 1_000), Int(1_000_000), numeric=True)
-# ]
-# printEquality(lst)
+def printSeparator():
+    term_width = os.get_terminal_size().columns
+    print("=" * term_width, end="\n\n")
+
+printSeparator()
 
 for i in sys.stdin:
     i = int(i)
@@ -62,10 +58,10 @@ for i in sys.stdin:
            Fraction(f"{i} * 1 000", "1 000 000", numeric=False), 
            Fraction(Int(i * 1_000), Int(1_000_000), numeric=True)]
     printEquality(lst)
-
-    printSeparator()
         
     lst = [Fraction(f"{i}", "1 001", numeric=False), 
            Fraction(f"{i} * 999", "999 999", numeric=False), 
            Fraction(Int(i * 999), Int(999_999), numeric=True)]
     printEquality(lst)
+
+    printSeparator()
