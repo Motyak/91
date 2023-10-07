@@ -16,7 +16,7 @@ def printEquality(lst):
     def get_line(lineno):
         assert lineno in {1, 2, 3}
         return out[lineno - 1].getvalue()
-    
+
     def append_elem(elem):
         if elem.numeric:
             # TODO:
@@ -25,7 +25,7 @@ def printEquality(lst):
                 line2 = " = " + line2
             append_to_line(2, line2)
             return
-        
+
         line1, line2, line3 = elem.__str__().split("\n")
         if len(get_line(2)) != 0:
             line1 = len(" = ") * " " + line1
@@ -37,7 +37,7 @@ def printEquality(lst):
 
     for elem in lst:
         append_elem(elem)
-    
+
     res = map(lambda x: x.getvalue(), out)
     res = filter(lambda x: len(x) != 0, res)
     res = "\n".join(res)
@@ -46,7 +46,11 @@ def printEquality(lst):
         print(end="\n\n") # trailing newline
 
 def printSeparator():
-    term_width = os.get_terminal_size().columns
+    term_width = 80
+    try:
+        term_width = os.get_terminal_size().columns
+    except:
+        pass # use default value
     print("=" * term_width, end="\n\n")
 
 printSeparator()
@@ -54,13 +58,13 @@ printSeparator()
 for i in sys.stdin:
     i = int(i)
 
-    lst = [Fraction(f"{i}", "1 000", numeric=False), 
-           Fraction(f"{i} * 1 000", "1 000 000", numeric=False), 
+    lst = [Fraction(f"{i}", "1 000", numeric=False),
+           Fraction(f"{i} * 1 000", "1 000 000", numeric=False),
            Fraction(Int(i * 1_000), Int(1_000_000), numeric=True)]
     printEquality(lst)
-        
-    lst = [Fraction(f"{i}", "1 001", numeric=False), 
-           Fraction(f"{i} * 999", "999 999", numeric=False), 
+
+    lst = [Fraction(f"{i}", "1 001", numeric=False),
+           Fraction(f"{i} * 999", "999 999", numeric=False),
            Fraction(Int(i * 999), Int(999_999), numeric=True)]
     printEquality(lst)
 
