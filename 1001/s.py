@@ -23,7 +23,9 @@ def printEquality(lst):
             line2 = elem.__str__()
             if len(get_line(2)) != 0:
                 line2 = " = " + line2
+            append_to_line(1, len(line2) * " ")
             append_to_line(2, line2)
+            append_to_line(3, len(line2) * " ")
             return
 
         line1, line2, line3 = elem.__str__().split("\n")
@@ -65,7 +67,10 @@ for i in sys.stdin:
 
     lst = [Fraction(f"{i}", "1 001", numeric=False),
            Fraction(f"{i} * 999", "999 999", numeric=False),
-           Fraction(Int(i * 999), Int(999_999), numeric=True)]
+           Fraction(f"{i} * 1 000 - {i}", "999 999", numeric=False),
+           Fraction(f"{Int(i * 1_000 - i)}", "999 999", numeric=False),
+           Fraction(Int(i * 1_000 - i), Int(999_999), numeric=True),
+           Fraction(Int(i * 1_000 - i), Int(999_999), numeric=False)]
     printEquality(lst)
 
     printSeparator()
