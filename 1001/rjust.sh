@@ -19,7 +19,8 @@ function maxw {
 }
 
 function rjust {
-    local width=${1:-}
+    local filler="${1:- }"
+    local width="${2:-}"
     local stdin="$(< /dev/stdin)"
     [ -z "$width" ] && width="$(maxw <<< "$stdin")"
     [[ "$width" =~ [0-9]+ ]] || validation_err "width"
@@ -27,7 +28,7 @@ function rjust {
         local line_len=${#line}
         local required_spaces=$((width - line_len))
         for ((i = 1; i <= $required_spaces; ++i)); do
-            echo -n " "
+            echo -n "${filler:0:1}"
         done
         echo "$line"
     done <<< "$stdin"
