@@ -47,18 +47,22 @@ def printEquality(lst):
     if len(res) != 0:
         print(end="\n\n") # trailing newline
 
-def printSeparator():
-    term_width = 80
-    try:
-        term_width = os.get_terminal_size().columns
-    except:
-        pass # use default value
-    print("=" * term_width, end="\n\n")
+def printSeparator(leading_newline=False):
+    width = len("----- = --------- = ------------- = -------- = 0.(373626) = --")
+    #try:
+    #    width = os.get_terminal_size().columns
+    #except:
+    #    pass # use default value
+    if leading_newline:
+        print(end="\n")
+    print("=" * width, end="\n\n")
 
-printSeparator()
-
+first_sep_printed = False
 for i in sys.stdin:
     i = int(i)
+    if not first_sep_printed:
+        printSeparator(leading_newline=True)
+        first_sep_printed = True
 
     lst = [Fraction(f"{i}", "1 000", numeric=False),
            Fraction(f"{i} * 1 000", "1 000 000", numeric=False),
@@ -67,7 +71,7 @@ for i in sys.stdin:
 
     lst = [Fraction(f"{i}", "1 001", numeric=False),
            Fraction(f"{i} * 999", "999 999", numeric=False),
-           Fraction(f"{i} * 1 000 - {i}", "999 999", numeric=False),
+           Fraction(f"{i} 000 - {i}", "999 999", numeric=False),
            Fraction(f"{Int(i * 1_000 - i)}", "999 999", numeric=False),
            Fraction(Int(i * 1_000 - i), Int(999_999), numeric=True),
            Fraction(Int(i * 1_000 - i), Int(999_999), numeric=False)]
